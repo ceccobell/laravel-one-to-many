@@ -27,11 +27,11 @@ class TypeSeeder extends Seeder
             'Vue'
         ];
 
-        foreach ($types as $type) {
+        foreach ($types as $typeName) {
             
             $type= new Type();
-            $type->name =$type;
-            $type->slug = Str::slug($type,'-');
+            $type->name = $typeName;
+            $type->slug = Str::slug($typeName,'-');
 
             $type->save();
 

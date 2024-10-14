@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule; 
 
 class StoreProjectRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class StoreProjectRequest extends FormRequest
             'name' => 'required|string|max:100',
             'summary' => 'nullable|string',
             'project_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'type_id' => ['nullable', Rule::exists('types', 'id')], 
         ];
     }
 
@@ -43,6 +45,7 @@ class StoreProjectRequest extends FormRequest
             'project_image.image' => 'Il file deve essere un\'immagine valida.',
             'project_image.mimes' => 'L\'immagine deve essere nei formati: jpg, jpeg o png.',
             'project_image.max' => 'L\'immagine non può superare i 2MB.',
+            'category_id.exists' => 'La categoria selezionata non è valida.',
         ];
     }
 }

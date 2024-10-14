@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->foreignId('type_id')->nullable()->constrained()->onDelete('set null');
+            // Aggiungo la colonna type_id come chiave esterna
+            $table->unsignedBigInteger('type_id')->nullable()->after('id');
+            
+            // Definisco la chiave esterna con la tabella 'types' e imposto 'set null' alla cancellazione del type
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
         });
     }
 
@@ -26,7 +30,11 @@ return new class extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            //
+            // Rimuovo il vincolo di chiave esterna
+            $table->dropForeign(['type_id']);
+            
+            // Rimuovo la colonna type_id
+            $table->dropColumn('type_id');
         });
     }
 };
